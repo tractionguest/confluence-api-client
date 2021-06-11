@@ -21,12 +21,12 @@ module Confluence
 
       def get(params)
         response = conn.get('rest/api/content', params)
-        JSON.parse(response.body)['results']
+        JSON.parse(response.body, symbolize_names: true).fetch(:results,[])
       end
 
-        JSON.parse(response.body)
       def get_by_id(id, params={})
         response = conn.get('rest/api/content/' + id, params)
+        JSON.parse(response.body, symbolize_names: true)
       end
 
       def create(params)
@@ -35,7 +35,7 @@ module Confluence
           req.headers['Content-Type'] = 'application/json'
           req.body                    = params.to_json
         end
-        JSON.parse(response.body)
+        JSON.parse(response.body, symbolize_names: true)
       end
 
       def update(id, params)
@@ -44,7 +44,7 @@ module Confluence
           req.headers['Content-Type'] = 'application/json'
           req.body                    = params.to_json
         end
-        JSON.parse(response.body)
+        JSON.parse(response.body, symbolize_names: true)
       end
 
     end
