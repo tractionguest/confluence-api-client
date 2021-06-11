@@ -11,7 +11,7 @@ require "confluence/api/client"
 # (If you use this, don't forget to add pry to your Gemfile!)
 require "pry"
 
-def client(user: ENV.fetch('JIRA_USERNAME'), pass: ENV.fetch('JIRA_API_TOKEN'), url: ENV.fetch('JIRA_HOST'))
+def client(user: ENV.fetch('ATLASSIAN_USERNAME'), pass: ENV.fetch('ATLASSIAN_API_TOKEN'), url: ENV.fetch('ATLASSIAN_HOST'))
   @_client ||= Confluence::Api::Client.new(user, pass, url)
 end
 
