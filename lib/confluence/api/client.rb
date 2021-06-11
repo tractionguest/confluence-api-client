@@ -24,9 +24,9 @@ module Confluence
         JSON.parse(response.body)['results']
       end
 
-      def get_by_id(id)
-        response = conn.get('/rest/api/content/' + id)
         JSON.parse(response.body)
+      def get_by_id(id, params={})
+        response = conn.get('rest/api/content/' + id, params)
       end
 
       def create(params)
