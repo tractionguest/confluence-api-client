@@ -1,14 +1,29 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
+require "dotenv"
+Dotenv.load
 require "confluence/api/client"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 
 # (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+require "pry"
 
-require "irb"
-IRB.start
+def client(user: ENV.fetch('JIRA_USERNAME'), pass: ENV.fetch('JIRA_API_TOKEN'), url: ENV.fetch('JIRA_HOST'))
+  @_client ||= Confluence::Api::Client.new(user, pass, url)
+end
+
+def page(page_id, c: client, **params)
+  c.get_by_id(page_id, params)
+end
+
+def page_children(page_id, c: client)
+  c.get_by_id(page_id+"/child/page").fetch(:results).map {|i| PermissionPage.new(**i) }
+end
+
+Pry.start
+
+# require "irb"
+# IRB.start
