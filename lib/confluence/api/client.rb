@@ -47,6 +47,13 @@ module Confluence
         JSON.parse(response.body, symbolize_names: true)
       end
 
+      def delete(id, status:nil)
+        response = conn.delete do |req|
+          req.url status ? "rest/api/content/#{id}?status=#{status}" : "rest/api/content/#{id}"
+          req.headers['Content-Type'] = 'application/json'
+        end
+        response.body
+      end
     end
   end
 end
